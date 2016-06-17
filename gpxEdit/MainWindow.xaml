@@ -1,0 +1,31 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
+        xmlns:local="clr-namespace:gpxEdit"
+        xmlns:Ribbon="http://schemas.microsoft.com/winfx/2006/xaml/presentation/ribbon" x:Class="gpxEdit.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525" WindowState="Maximized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="137"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Ribbon:Ribbon Grid.Row="0" Grid.ColumnSpan="2" x:Name="ribbon" VerticalAlignment="Top" Margin="0">
+            <Ribbon:RibbonTab Header="Основное">
+                <Ribbon:RibbonGroup>
+                    <Ribbon:RibbonButton x:Name="OpenGpxRibbonButton" Label="Открыть gpx" Width="75" VerticalAlignment="Top" LargeImageSource="Images/open.png" Click="OpenGpxRibbonButton_Click" />
+                </Ribbon:RibbonGroup>
+            </Ribbon:RibbonTab>
+        </Ribbon:Ribbon>
+        <m:Map x:Name="TracksMap" Grid.Row="1" Grid.Column="1" CredentialsProvider="AsFj5VQQ7VNf8udc4R2m-eoaviJSUiusJwK6nR-70fdhdkS_xtvhs948kiQRFUoh" Mode="Road" VerticalAlignment="Stretch"/>
+        
+
+    </Grid>
+</Window>
