@@ -19,5 +19,15 @@ namespace gpx
         {
             _segments.Add(segment);
         }
+
+        public TrackSegment[] GetSegments()
+        {
+            TrackSegment[] segments = new TrackSegment[_segments.Count];
+            for (int i = 0; i < _segments.Count; i++)
+            {
+                segments[i] = _segments[i];
+            }
+            return segments;
+        }
     }
 }

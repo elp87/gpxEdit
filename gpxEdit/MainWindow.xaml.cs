@@ -72,5 +72,53 @@ namespace gpxEdit
             }
             
         }
+
+        private void Waypoints2TrackRibbonButton_Click(object sender, RoutedEventArgs e)
+        {
+            Gpx gpxFile = new Gpx();
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.DefaultExt = ".gpx";
+            ofd.Filter = "Gpx Files (*.gpx)|*.gpx";
+            bool? result = ofd.ShowDialog();
+
+            if (result == true)
+            {
+
+                XElement gpxXE = XElement.Load(ofd.FileName);
+                Track track = new Track();
+                TrackSegment segment = new TrackSegment();
+
+                var rteList = gpxXE.Elements().Where(el => el.Name.LocalName == "rte").ToList();
+                foreach (var rteXE in rteList)
+                {
+                    var rteptList = rteXE.Elements().Where(el => el.Name.LocalName == "rtept").ToList();
+                    foreach (var rteptXE in rteptList)
+                    {
+                        double latValue, longValue;
+                        latValue = double.Parse(rteptXE.Attribute("lat").Value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture);
+                        longValue = double.Parse(rteptXE.Attribute("lon").Value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture);
+                        segment.AddPoint(new TrackPoint { Latitude = latValue, Longtitude = longValue });
+                    }
+                }
+                track.AddSegment(segment);
+                gpxFile.AddTrack(track);
+
+                MapPolyline line = new MapPolyline();
+                line.Stroke = new SolidColorBrush(Colors.Red);
+                line.StrokeThickness = 3;
+                line.Opacity = 0.7;
+                LocationCollection locations = new LocationCollection();
+                foreach (var point in segment.GetPoints())
+                {
+                    locations.Add(new Location { Latitude = point.Latitude, Longitude = point.Longtitude });
+                }
+                line.Locations = locations;
+                TracksMap.Children.Add(line);
+
+                StartEndDateWindow window = new StartEndDateWindow(track);
+                window.ShowDialog();
+            }
+        }
+        
     }
 }

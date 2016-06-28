@@ -20,7 +20,8 @@
         <Ribbon:Ribbon Grid.Row="0" Grid.ColumnSpan="2" x:Name="ribbon" VerticalAlignment="Top" Margin="0">
             <Ribbon:RibbonTab Header="Основное">
                 <Ribbon:RibbonGroup>
-                    <Ribbon:RibbonButton x:Name="OpenGpxRibbonButton" Label="Открыть gpx" Width="75" VerticalAlignment="Top" LargeImageSource="Images/open.png" Click="OpenGpxRibbonButton_Click" />
+                    <Ribbon:RibbonButton x:Name="OpenGpxRibbonButton" Label="Открыть gpx" Width="75" VerticalAlignment="Top" LargeImageSource="Images/open.png" Click="OpenGpxRibbonButton_Click" ></Ribbon:RibbonButton>
+                    <Ribbon:RibbonButton x:Name="Waypoints2TrackRibbonButton" Label="Waypoint2track" Width="75" FontSize="9.333" Click="Waypoints2TrackRibbonButton_Click" ></Ribbon:RibbonButton>
                 </Ribbon:RibbonGroup>
             </Ribbon:RibbonTab>
         </Ribbon:Ribbon>
