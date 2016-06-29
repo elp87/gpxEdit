@@ -19,16 +19,14 @@ namespace gpxEdit
             InitializeComponent();
         }
 
-        
-
         private void OpenGpxRibbonButton_Click(object sender, RoutedEventArgs e)
         {
             Gpx gpxFile = new Gpx();
             string gpxFilename = OpenGpxDialog();
             if (gpxFilename != null)
-            {   
+            {
                 XElement gpxXE = XElement.Load(gpxFilename);
-                
+
                 var trkList = gpxXE.Elements().Where(el => el.Name.LocalName == "trk").ToList();
                 foreach (var trkXE in trkList)
                 {
@@ -38,9 +36,9 @@ namespace gpxEdit
                         TrackSegment segment = new TrackSegment();
                         foreach (var trkptXE in trksegXE.Elements().Where(el => el.Name.LocalName == "trkpt").ToList())
                         {
-                            
+
                             double latValue, longValue;
-                            DateTime time;                            
+                            DateTime time;
                             latValue = double.Parse(trkptXE.Attribute("lat").Value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture);
                             longValue = double.Parse(trkptXE.Attribute("lon").Value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture);
                             time = DateTime.Parse(trkptXE.Elements().First(el => el.Name.LocalName == "time").Value);
@@ -48,26 +46,22 @@ namespace gpxEdit
                         }
                         track.AddSegment(segment);
 
-                        MapPolyline line = new MapPolyline();
-                        line.Stroke = new SolidColorBrush(Colors.Red);
-                        line.StrokeThickness = 3;
-                        line.Opacity = 0.7;
                         LocationCollection locations = new LocationCollection();
                         foreach (var point in segment.GetPoints())
                         {
                             locations.Add(new Location { Latitude = point.Latitude, Longitude = point.Longtitude });
                         }
-                        line.Locations = locations;
+                        MapPolyline line = CreateMapLine(locations);
                         TracksMap.Children.Add(line);
-                        }
+                    }
                     gpxFile.AddTrack(track);
                 }
-            }            
+            }
         }
 
         private void Waypoints2TrackRibbonButton_Click(object sender, RoutedEventArgs e)
         {
-            Gpx gpxFile = new Gpx();            
+            Gpx gpxFile = new Gpx();
             string gpxFilename = OpenGpxDialog();
             if (gpxFilename != null)
             {
@@ -89,17 +83,13 @@ namespace gpxEdit
                 }
                 track.AddSegment(segment);
                 gpxFile.AddTrack(track);
-
-                MapPolyline line = new MapPolyline();
-                line.Stroke = new SolidColorBrush(Colors.Red);
-                line.StrokeThickness = 3;
-                line.Opacity = 0.7;
+                
                 LocationCollection locations = new LocationCollection();
                 foreach (var point in segment.GetPoints())
                 {
                     locations.Add(new Location { Latitude = point.Latitude, Longitude = point.Longtitude });
                 }
-                line.Locations = locations;
+                MapPolyline line = CreateMapLine(locations);
                 TracksMap.Children.Add(line);
 
                 StartEndDateWindow window = new StartEndDateWindow(track);
@@ -118,6 +108,14 @@ namespace gpxEdit
             else return null;
         }
 
-        
+        private static MapPolyline CreateMapLine(LocationCollection locations)
+        {
+            MapPolyline line = new MapPolyline();
+            line.Stroke = new SolidColorBrush(Colors.Red);
+            line.StrokeThickness = 3;
+            line.Opacity = 0.7;
+            line.Locations = locations;
+            return line;
+        }
     }
 }
