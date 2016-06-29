@@ -24,15 +24,10 @@ namespace gpxEdit
         private void OpenGpxRibbonButton_Click(object sender, RoutedEventArgs e)
         {
             Gpx gpxFile = new Gpx();
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.DefaultExt = ".gpx";
-            ofd.Filter = "Gpx Files (*.gpx)|*.gpx";
-            bool? result = ofd.ShowDialog();
-
-            if (result == true)
-            {
-                
-                XElement gpxXE = XElement.Load(ofd.FileName);
+            string gpxFilename = OpenGpxDialog();
+            if (gpxFilename != null)
+            {   
+                XElement gpxXE = XElement.Load(gpxFilename);
                 
                 var trkList = gpxXE.Elements().Where(el => el.Name.LocalName == "trk").ToList();
                 foreach (var trkXE in trkList)
@@ -67,24 +62,16 @@ namespace gpxEdit
                         }
                     gpxFile.AddTrack(track);
                 }
-
-
-            }
-            
+            }            
         }
 
         private void Waypoints2TrackRibbonButton_Click(object sender, RoutedEventArgs e)
         {
-            Gpx gpxFile = new Gpx();
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.DefaultExt = ".gpx";
-            ofd.Filter = "Gpx Files (*.gpx)|*.gpx";
-            bool? result = ofd.ShowDialog();
-
-            if (result == true)
+            Gpx gpxFile = new Gpx();            
+            string gpxFilename = OpenGpxDialog();
+            if (gpxFilename != null)
             {
-
-                XElement gpxXE = XElement.Load(ofd.FileName);
+                XElement gpxXE = XElement.Load(gpxFilename);
                 Track track = new Track();
                 TrackSegment segment = new TrackSegment();
 
@@ -119,6 +106,18 @@ namespace gpxEdit
                 window.ShowDialog();
             }
         }
+
+        private static string OpenGpxDialog()
+        {
+            Gpx gpxFile = new Gpx();
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.DefaultExt = ".gpx";
+            ofd.Filter = "Gpx Files (*.gpx)|*.gpx";
+            bool? result = ofd.ShowDialog();
+            if (result == true) return ofd.FileName;
+            else return null;
+        }
+
         
     }
 }
