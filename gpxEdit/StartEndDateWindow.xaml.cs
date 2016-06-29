@@ -8,9 +8,9 @@ using Microsoft.Win32;
 
 namespace gpxEdit
 {    
-    public partial class StartEndDateWindow : Window
+    public partial class StartEndDateWindow
     {
-        private Track _track;
+        private readonly Track _track;
 
         public StartEndDateWindow()
         {
@@ -34,11 +34,11 @@ namespace gpxEdit
                 DateTime startTime = StartDTPicker.Value.Value;
                 DateTime finishTime = FinishDTPicker.Value.Value;
                 TimeSpan fullSpan = finishTime - startTime;
-                int pieceCount = _track.GetSegments().Sum(segment => segment.GetPoints().Count());
+                int pieceCount = _track.GetSegments().Sum(segment => segment.GetPoints().Length);
                 TimeSpan pieceSpan = new TimeSpan(fullSpan.Ticks / pieceCount);
                 
 
-                XElement[] pointsXEs = new XElement[pieceCount];
+                object[] pointsXEs = new object[pieceCount];
                 int i = 0;
 
                 foreach (var segment in _track.GetSegments())
@@ -46,29 +46,31 @@ namespace gpxEdit
                     foreach (var point in segment.GetPoints())
                     {
                         DateTime date = startTime + new TimeSpan(pieceSpan.Ticks * i);
-                        XElement curPointXE = new XElement("trkpt", 
+                        XElement curPointXe = new XElement("trkpt", 
                             new XAttribute("lat", point.Latitude.ToString(CultureInfo.InvariantCulture)),
                             new XAttribute("lon", point.Longtitude.ToString(CultureInfo.InvariantCulture)),
                             new XElement("time", date.ToString("yyyy-MM-ddTHH:mm:ss")));
-                        pointsXEs[i] = curPointXE;
+                        pointsXEs[i] = curPointXe;
                         i++;
                         
                     }
                 }
-                XElement gpxXE = new XElement("gpx", 
+                XElement gpxXe = new XElement("gpx", 
                     new XElement("trk",
                         new XElement("trkseg", pointsXEs)
                     )
                 );
 
-                SaveFileDialog sfd = new SaveFileDialog();
-                sfd.DefaultExt = ".gpx";
-                sfd.Filter = "Gpx Files (*.gpx)|*.gpx";
+                SaveFileDialog sfd = new SaveFileDialog
+                {
+                    DefaultExt = ".gpx",
+                    Filter = "Gpx Files (*.gpx)|*.gpx"
+                };
                 bool? result = sfd.ShowDialog();
 
                 if (result == true)
                 {
-                    gpxXE.Save(sfd.FileName);
+                    gpxXe.Save(sfd.FileName);
                 }
 
                 Close();
