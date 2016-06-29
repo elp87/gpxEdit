@@ -70,6 +70,8 @@ namespace gpxEdit
                 {
                     gpxXE.Save(sfd.FileName);
                 }
+
+                Close();
             }
         }
     }
