@@ -2,19 +2,16 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"        
-        xmlns:local="clr-namespace:gpxEdit"
-        xmlns:Custom="http://schemas.microsoft.com/winfx/2006/xaml/presentation/ribbon" 
-        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:elp="clr-namespace:elp87.Helpers.Controls;assembly=elp87.Helpers" 
         x:Class="gpxEdit.StartEndDateWindow"
         mc:Ignorable="d"
-        Title="StartEndDateWindow" Height="300" Width="300">
+        Title="StartEndDateWindow" Height="546" Width="624">
     <Grid x:Name="MainGrid">
         <Label Content="Начальное дата/время" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <xctk:DateTimePicker x:Name="StartDTPicker" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" Width="211"/>
-
-        <Label Content="Конечное дата/время" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top"/>
-        <xctk:DateTimePicker x:Name="FinishDTPicker" HorizontalAlignment="Left" Margin="10,130,0,0" VerticalAlignment="Top" Width="211"/>
+        <elp:DateTimeControl x:Name="StartDtControl" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Height="232" Width="178"/>
+        <Label Content="Конечное дата/время" HorizontalAlignment="Left" Margin="368,18,0,0" VerticalAlignment="Top"/>
+        <elp:DateTimeControl x:Name="FinishDtControl" HorizontalAlignment="Left" Margin="368,49,0,0" VerticalAlignment="Top" Height="232" Width="178"/>
         <Button x:Name="OkButton" Content="ОК" Margin="109,0,108,10" VerticalAlignment="Bottom" Click="OkButton_Click"/>
     </Grid>
 </Window>

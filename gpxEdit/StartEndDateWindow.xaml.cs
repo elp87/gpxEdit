@@ -15,8 +15,6 @@ namespace gpxEdit
         public StartEndDateWindow()
         {
             InitializeComponent();
-            StartDTPicker.Value = DateTime.Now;
-            FinishDTPicker.Value = DateTime.Now;            
         }
 
         public StartEndDateWindow(Track track) 
@@ -28,11 +26,11 @@ namespace gpxEdit
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
             // TODO: Сделать проверки
-            if (FinishDTPicker.Value <= StartDTPicker.Value) MessageBox.Show("Конечное время не может быть меньше ");
+            if (StartDtControl.Value >= FinishDtControl.Value) MessageBox.Show("Конечное время не может быть меньше ");
             else
             {
-                DateTime startTime = StartDTPicker.Value.Value;
-                DateTime finishTime = FinishDTPicker.Value.Value;
+                DateTime startTime = StartDtControl.Value;
+                DateTime finishTime = FinishDtControl.Value;
                 TimeSpan fullSpan = finishTime - startTime;
                 int pieceCount = _track.GetSegments().Sum(segment => segment.GetPoints().Length);
                 TimeSpan pieceSpan = new TimeSpan(fullSpan.Ticks / pieceCount);
