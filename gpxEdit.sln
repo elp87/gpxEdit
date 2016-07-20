@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gpxEdit", "gpxEdit\gpxEdit.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gpx", "gpx\gpx.csproj", "{C4633BB1-4A7C-44BB-AF0F-7E5742545BDD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GpxTest", "GpxTest\GpxTest.csproj", "{F02E28B6-4388-49A9-A4D8-9BCCB0367018}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C4633BB1-4A7C-44BB-AF0F-7E5742545BDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4633BB1-4A7C-44BB-AF0F-7E5742545BDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4633BB1-4A7C-44BB-AF0F-7E5742545BDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F02E28B6-4388-49A9-A4D8-9BCCB0367018}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F02E28B6-4388-49A9-A4D8-9BCCB0367018}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F02E28B6-4388-49A9-A4D8-9BCCB0367018}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F02E28B6-4388-49A9-A4D8-9BCCB0367018}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
