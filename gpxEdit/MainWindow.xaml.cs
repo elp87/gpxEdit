@@ -63,20 +63,44 @@ namespace gpxEdit
             Track track = new Track();
             TrackSegment segment = new TrackSegment();
 
-            var rteList = gpxXe.Elements().Where(el => el.Name.LocalName == "rte").ToList();
-            foreach (var rteXe in rteList)
+            var rteList = gpxXe.Elements().Where(el => el.Name.LocalName == "rte" ).ToList();
+            if (rteList.Count != 0)
             {
-                var rteptList = rteXe.Elements().Where(el => el.Name.LocalName == "rtept").ToList();
-                foreach (var rteptXe in rteptList)
+                foreach (var rteXe in rteList)
                 {
-                    double latValue = double.Parse(rteptXe.Attribute("lat").Value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture);
-                    double longValue = double.Parse(rteptXe.Attribute("lon").Value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture);
-                    segment.AddPoint(new TrackPoint { Latitude = latValue, Longtitude = longValue });
+                    var rteptList = rteXe.Elements().Where(el => el.Name.LocalName == "rtept").ToList();
+                    foreach (var rteptXe in rteptList)
+                    {
+                        double latValue = double.Parse(rteptXe.Attribute("lat").Value,
+                            System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture);
+                        double longValue = double.Parse(rteptXe.Attribute("lon").Value,
+                            System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture);
+                        segment.AddPoint(new TrackPoint {Latitude = latValue, Longtitude = longValue});
+                    }
                 }
+                track.AddSegment(segment);
+                gpxFile.AddTrack(track);
             }
-            track.AddSegment(segment);
-            gpxFile.AddTrack(track);
-                
+            var trkList = gpxXe.Elements().Where(el => el.Name.LocalName == "trk").ToList();
+            foreach (var trkXe in trkList)
+            {
+                var trksegList = trkXe.Elements().Where(el => el.Name.LocalName == "trkseg").ToList();
+                foreach (var trksegXe in trksegList)
+                {
+                    var trkptList = trksegXe.Elements().Where(el => el.Name.LocalName == "trkpt").ToList();
+                    foreach (var trkptXe in trkptList)
+                    {
+                        double latValue = double.Parse(trkptXe.Attribute("lat").Value,
+                            System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture);
+                        double longValue = double.Parse(trkptXe.Attribute("lon").Value,
+                            System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture);
+                        segment.AddPoint(new TrackPoint {Latitude = latValue, Longtitude = longValue});
+                    }
+                }
+                track.AddSegment(segment);
+                gpxFile.AddTrack(track);
+            }
+
             LocationCollection locations = new LocationCollection();
             foreach (var point in segment.GetPoints())
             {
